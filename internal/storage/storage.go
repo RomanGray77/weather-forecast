@@ -6,14 +6,14 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/RomanGray77/weather-forecast/internal/weather"
+	"github.com/RomanGray77/weather-forecast/internal/config"
 )
 
 const filename = "weather_forecast.json"
 
 // Save writes days to weather_forecast.json as indented JSON, overwriting
 // any previous contents.
-func Save(days []weather.DayForecast) error {
+func Save(days []config.DayForecast) error {
 	data, err := json.MarshalIndent(days, "", "  ")
 	if err != nil {
 		return fmt.Errorf("marshaling forecast: %w", err)

@@ -6,16 +6,11 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+
+	"github.com/RomanGray77/weather-forecast/internal/config"
 )
 
-// DayForecast is the subset of wttr.in's per-day data this app cares about.
-type DayForecast struct {
-	Date     string `json:"date"`
-	AvgTempC string `json:"avgtempC"`
-	Sunrise  string `json:"sunrise"`
-	Sunset   string `json:"sunset"`
-}
-
+// The data structure returned by wttr.in's JSON API.
 type wttrResponse struct {
 	Weather []struct {
 		Date      string `json:"date"`
@@ -29,7 +24,7 @@ type wttrResponse struct {
 
 // Fetch requests the forecast for city from wttr.in and returns one
 // DayForecast per day in the response.
-func Fetch(city string) ([]DayForecast, error) {
+func Fetch(city string) ([]config.DayForecast, error) {
 	reqURL := fmt.Sprintf("https://wttr.in/%s?format=j2", url.PathEscape(city))
 
 	resp, err := http.Get(reqURL)
@@ -47,9 +42,9 @@ func Fetch(city string) ([]DayForecast, error) {
 		return nil, fmt.Errorf("decoding wttr.in response: %w", err)
 	}
 
-	days := make([]DayForecast, 0, len(parsed.Weather))
+	days := make([]config.DayForecast, 0, len(parsed.Weather))
 	for _, w := range parsed.Weather {
-		day := DayForecast{Date: w.Date, AvgTempC: w.AvgTempC}
+		day := config.DayForecast{Date: w.Date, AvgTempC: w.AvgTempC}
 		if len(w.Astronomy) > 0 {
 			day.Sunrise = w.Astronomy[0].Sunrise
 			day.Sunset = w.Astronomy[0].Sunset
