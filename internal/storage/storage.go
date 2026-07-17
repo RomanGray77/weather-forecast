@@ -9,7 +9,7 @@ import (
 	"github.com/RomanGray77/weather-forecast/internal/config"
 )
 
-const filename = "weather_forecast.json"
+const filename = "weather_Wetzikon.json"
 
 // Save writes days to weather_forecast.json as indented JSON, overwriting
 // any previous contents.
@@ -24,4 +24,18 @@ func Save(days []config.DayForecast) error {
 	}
 
 	return nil
+}
+
+func Load() ([]config.DayForecast, error) {
+	data, err := os.ReadFile(filename)
+	if err != nil {
+		return nil, fmt.Errorf("reading %s: %w", filename, err)
+	}
+
+	var days []config.DayForecast
+	if err := json.Unmarshal(data, &days); err != nil {
+		return nil, fmt.Errorf("unmarshaling forecast: %w", err)
+	}
+
+	return days, nil
 }

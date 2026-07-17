@@ -9,7 +9,10 @@
 
   <form method="POST" action="/weather">
     <label for="city">City:</label>
-    <input type="text" id="city" name="city" value="{{.City}}" required>
+    <select id="city" name="city" required>
+      <option value="Wetzikon" {{if eq .City "Wetzikon"}}selected{{end}}>Wetzikon</option>
+      <option value="Sofia" {{if eq .City "Sofia"}}selected{{end}}>Sofia</option>
+    </select>
     <button type="submit">Submit</button>
   </form>
 

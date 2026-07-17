@@ -1,0 +1,26 @@
+[
+  {
+    "date": "2026-07-16",
+    "avgtempC": "-",
+    "sunrise": "-",
+    "sunset": "-"
+  },
+  {
+    "date": "2026-07-17",
+    "avgtempC": "24",
+    "sunrise": "06:04 AM",
+    "sunset": "09:02 PM"
+  },
+  {
+    "date": "2026-07-18",
+    "avgtempC": "25",
+    "sunrise": "06:05 AM",
+    "sunset": "09:01 PM"
+  },
+  {
+    "date": "2026-07-19",
+    "avgtempC": "22",
+    "sunrise": "06:05 AM",
+    "sunset": "09:00 PM"
+  }
+]
