@@ -3,11 +3,11 @@ package handler
 import (
 	"embed"
 	"html/template"
+	"log"
 	"net/http"
 
 	"github.com/RomanGray77/weather-forecast/internal/config"
 	"github.com/RomanGray77/weather-forecast/internal/storage"
-	"github.com/RomanGray77/weather-forecast/internal/weather"
 )
 
 //go:embed templates/weather.html
@@ -34,18 +34,13 @@ func WeatherSubmit(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	days, err := weather.Fetch(city)
+	savedForecasts, err := storage.Load()
 	if err != nil {
-		renderTemplate(w, pageData{City: city, Error: "Could not fetch forecast: " + err.Error()})
-		return
+		log.Fatal(err)
 	}
+	log.Println("The latest saved forecast day:", savedForecasts[len(savedForecasts)-1].Date)
 
-	if err := storage.Save(days); err != nil {
-		renderTemplate(w, pageData{City: city, Error: "Could not save forecast: " + err.Error()})
-		return
-	}
-
-	renderTemplate(w, pageData{City: city, Results: days})
+	renderTemplate(w, pageData{City: city, Results: savedForecasts})
 }
 
 func renderTemplate(w http.ResponseWriter, data pageData) {

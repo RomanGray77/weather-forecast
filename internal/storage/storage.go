@@ -11,8 +11,7 @@ import (
 
 const filename = "weather_Wetzikon.json"
 
-// Save writes days to weather_forecast.json as indented JSON, overwriting
-// any previous contents.
+// SaveForecastToJSON writes days to weather_Wetzikon.json as indented JSON, overwriting any previous contents.
 func Save(days []config.DayForecast) error {
 	data, err := json.MarshalIndent(days, "", "  ")
 	if err != nil {
@@ -26,6 +25,7 @@ func Save(days []config.DayForecast) error {
 	return nil
 }
 
+// LoadForecastFromJSON reads days from weather_Wetzikon.json.
 func Load() ([]config.DayForecast, error) {
 	data, err := os.ReadFile(filename)
 	if err != nil {
